@@ -10,15 +10,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="TB_ALUNOS")
-public class Aluno{
-	
-	public Aluno()
-	{	
+@Table(name = "TB_ALUNOS")
+public class Aluno {
+
+	public Aluno() {
 	}
-	
-	public Aluno(long matricula)
-	{
+
+	public Aluno(long matricula) {
 		this.matricula = matricula;
 	}
 
@@ -63,80 +61,91 @@ public class Aluno{
 		this.localidade = localidade;
 		this.pastor = pastor;
 		this.atividades = atividades;
+		this.role = "ROLE_USER";
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long matricula;
-	
+
 	@NotNull
 	private String nome;
-	
+
 	@NotNull
 	private String password;
-	
+
+	private String role;
+
 	private Date data_nasc;
-	
+
 	private String estado_civil;
-	
+
 	private String sexo;
-	
+
 	private String cor_etnia;
-	
+
 	private String situacao_ocupacional;
-	
+
 	private String nome_empresa;
-	
+
 	private String funcao;
-	
+
 	private String endereco;
-	
+
 	private String bairro;
-	
+
 	private String cidade;
-	
+
 	private String uf;
-	
+
 	private String cep;
-	
+
 	private String telefone_1;
 
 	private String telefone_2;
 
 	@NotNull
 	private String email;
-	
+
 	@NotNull
 	private String cpf;
 
 	private String rg;
-	
+
 	private Date emissao;
-	
+
 	private String nacionalidade;
-	
+
 	private String naturalidade;
-	
+
 	private String mae;
-	
+
 	private String pai;
-	
+
 	private String necessidades_especiais;
-	
+
 	private String escola_ensino_medio;
-	
+
 	private int ano_conclusao;
-	
+
 	private String curso_superior;
-	
+
 	private String denominacao;
 
 	private String localidade;
 
 	private String pastor;
-	
+
 	private String atividades;
-	
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public long getMatricula() {
 		return matricula;
 	}
@@ -160,7 +169,7 @@ public class Aluno{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public Date getData_nasc() {
 		return data_nasc;
 	}
@@ -399,5 +408,5 @@ public class Aluno{
 
 	public void setAtividades(String atividades) {
 		this.atividades = atividades;
-	}	
+	}
 }

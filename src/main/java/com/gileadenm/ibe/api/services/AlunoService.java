@@ -10,61 +10,75 @@ import org.springframework.stereotype.Service;
 import com.gileadenm.ibe.api.DTO.AlunoDTO;
 import com.gileadenm.ibe.api.models.Aluno;
 import com.gileadenm.ibe.api.repository.AlunoRepository;
-import com.gileadenm.ibe.api.utils.HashMD5;
 
 @Service
 public class AlunoService {
 
 	@Autowired
 	private AlunoRepository alunoRepository;
-	
-	public List<AlunoDTO> getAlunos() {
-		
+
+	public List<AlunoDTO> getAlunosDTO() {
+
 		List<Aluno> alunos = alunoRepository.findAll();
-		
-		if (alunos.isEmpty() != true)
-		{
+
+		if (alunos.isEmpty() != true) {
 			List<AlunoDTO> alunosDTO = new ArrayList<>();
 
 			for (Aluno aluno : alunos) {
 				alunosDTO.add(new AlunoDTO(aluno));
 			}
-			
+
 			return alunosDTO;
-		}	
-		return null;	
+		}
+		return null;
 	}
-	
-	public AlunoDTO getAlunoByMatricula(long matricula) {
-		
+
+	public List<Aluno> getAlunos() {
+
+		List<Aluno> alunos = alunoRepository.findAll();
+
+		if (alunos.isEmpty() != true) {
+			return alunos;
+		}
+		return null;
+	}
+
+	public AlunoDTO getAlunoDTOByMatricula(long matricula) {
+
 		Optional<Aluno> optionalAluno = alunoRepository.findById(matricula);
-		
+
 		if (optionalAluno.isPresent()) {
 			return new AlunoDTO(optionalAluno.get());
 		}
 		return null;
 	}
-	
-	public AlunoDTO saveAluno(Aluno aluno) {
+
+	public AlunoDTO saveAlunoDTO(Aluno aluno) {
+		Aluno alunoR = alunoRepository.findAlunoByEmail(aluno.getEmail());
+		if (alunoR != null) {
+			aluno.setMatricula(alunoR.getMatricula());
+			aluno.setPassword(alunoR.getPassword());
+		}
+		else {
+			aluno.setPassword(aluno.getCpf());
+		}
 		try {
-			aluno.setPassword(HashMD5.getCriptografado(aluno.getCpf()));
+			aluno.setRole("ROLE_USER");
 			return new AlunoDTO(alunoRepository.save(aluno));
 		} catch (Exception e) {
-			// TODO: handle exception
 			return null;
 		}
-	}	
-	
-	public AlunoDTO deleteAluno(AlunoDTO alunoDTO) {
-		
-		alunoDTO = getAlunoByMatricula(alunoDTO.getMatricula());
-		
-		if (alunoDTO != null)
-		{
+	}
+
+	public AlunoDTO deleteAlunoDTO(AlunoDTO alunoDTO) {
+
+		alunoDTO = getAlunoDTOByMatricula(alunoDTO.getMatricula());
+
+		if (alunoDTO != null) {
 			alunoRepository.deleteById(alunoDTO.getMatricula());
 		}
-		
+
 		return alunoDTO;
 	}
-	
+
 }

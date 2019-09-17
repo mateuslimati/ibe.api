@@ -1,0 +1,11 @@
+/home/mateus-trix/workspace_java/ibe.api/ibe.api/src/main/java/com/gileadenm/ibe/api/utils/PDFGenerator.java
+/home/mateus-trix/workspace_java/ibe.api/ibe.api/src/main/java/com/gileadenm/ibe/api/controllers/AlunoController.java
+/home/mateus-trix/workspace_java/ibe.api/ibe.api/src/main/java/com/gileadenm/ibe/api/repository/AlunoRepository.java
+/home/mateus-trix/workspace_java/ibe.api/ibe.api/src/main/java/com/gileadenm/ibe/api/services/AlunoService.java
+/home/mateus-trix/workspace_java/ibe.api/ibe.api/src/main/java/com/gileadenm/ibe/api/utils/HeaderFooterPageEvent.java
+/home/mateus-trix/workspace_java/ibe.api/ibe.api/src/main/java/com/gileadenm/ibe/api/configs/SwaggerConfig.java
+/home/mateus-trix/workspace_java/ibe.api/ibe.api/src/main/java/com/gileadenm/ibe/api/configs/SecurityConfig.java
+/home/mateus-trix/workspace_java/ibe.api/ibe.api/src/main/java/com/gileadenm/ibe/api/DTO/AlunoDTO.java
+/home/mateus-trix/workspace_java/ibe.api/ibe.api/src/main/java/com/gileadenm/ibe/api/Application.java
+/home/mateus-trix/workspace_java/ibe.api/ibe.api/src/main/java/com/gileadenm/ibe/api/models/Aluno.java
+/home/mateus-trix/workspace_java/ibe.api/ibe.api/src/main/java/com/gileadenm/ibe/api/utils/HashMD5.java

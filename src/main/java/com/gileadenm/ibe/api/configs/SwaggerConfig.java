@@ -29,8 +29,9 @@ public class SwaggerConfig {
 	}
 	
 	private ApiInfo metaInfo() {
+		@SuppressWarnings("rawtypes")
 		ApiInfo apiInfo = new ApiInfo(
-				"Instituto Biblico Emanuel API", 
+				"Instituto Bíblico Emanuel API", 
 				"API REST de controle de turmas",
 				"1.0", 
 				"Terms of Service", 

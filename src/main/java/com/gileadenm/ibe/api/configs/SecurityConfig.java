@@ -10,30 +10,31 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.gileadenm.ibe.api.services.AuthenticationProviderImpl;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	AuthenticationProviderImpl authProvider;
+
+	@Override
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+		auth.authenticationProvider(authProvider);
+		auth.inMemoryAuthentication().withUser("gileadenm@gmail.com").password(passwordEncoder().encode("isaias9:6")).roles("ADMIN");
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests()
-		.anyRequest().authenticated()
-		.and().httpBasic()
-		.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+		http.httpBasic().and().authorizeRequests().antMatchers("/**").authenticated().and().csrf().disable();
 	}
-	
-	@Autowired
-	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-			.withUser("gileadenm").password(passwordEncoder().encode("isaias9:6")).roles("ADMIN");
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
-	
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-	
 }

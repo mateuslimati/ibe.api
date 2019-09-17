@@ -6,4 +6,5 @@ import com.gileadenm.ibe.api.models.Aluno;
 
 public interface AlunoRepository extends JpaRepository<Aluno, Long>{
 	
+	Aluno findAlunoByEmail(String email);
 }
