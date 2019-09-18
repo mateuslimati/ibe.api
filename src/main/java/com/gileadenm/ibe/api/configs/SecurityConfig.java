@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.httpBasic().and().authorizeRequests().antMatchers("/**").authenticated().and().csrf().disable();
+		http.cors().and().httpBasic().and().authorizeRequests().antMatchers("/**").authenticated().and().csrf().disable();
 	}
 
 	@Bean

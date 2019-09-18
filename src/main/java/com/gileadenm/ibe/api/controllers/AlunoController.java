@@ -29,100 +29,82 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
-@Api(value="API REST Alunos")
+@RequestMapping("/api")
+@CrossOrigin(origins = "*")
+@Api(value = "API REST Alunos")
 public class AlunoController {
 
 	@Autowired
 	private AlunoService alunoService;
-	
-	@RequestMapping(value = "login",
-			method = RequestMethod.GET)
-	@ApiOperation("Retorna o status de logado")
-	public HttpStatus basicLogin() {
-		
-		return HttpStatus.OK;
-		
-	}	
-	
-	@RequestMapping(value = "alunos",
-			method = RequestMethod.GET)
+
+	@RequestMapping(value = "/alunos", method = RequestMethod.GET)
 	@ApiOperation("Retorna uma lista de alunos")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<List<AlunoDTO>> getAlunos() {
-		
+
 		List<AlunoDTO> ResponseDTO = alunoService.getAlunosDTO();
-				
+
 		if (ResponseDTO != null) {
 			return new ResponseEntity<>(ResponseDTO, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		
+
 	}
-	
-	@RequestMapping(value = "aluno/{matricula}",
-			method = RequestMethod.GET)
+
+	@RequestMapping(value = "/aluno/{matricula}", method = RequestMethod.GET)
 	@ApiOperation("Retorna um aluno único")
-	public ResponseEntity<AlunoDTO> getAlunosByMatricula(
-			@PathVariable long matricula) {
-		
+	public ResponseEntity<AlunoDTO> getAlunosByMatricula(@PathVariable long matricula) {
+
 		AlunoDTO ResponseDTO = alunoService.getAlunoDTOByMatricula(matricula);
-				
+
 		if (ResponseDTO != null) {
 			return new ResponseEntity<>(ResponseDTO, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
-	@RequestMapping(value = "aluno",
-			method = RequestMethod.POST)
+
+	@RequestMapping(value = "/aluno", method = RequestMethod.POST)
 	@ApiOperation("Salva/Edita um aluno")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<AlunoDTO> saveAluno(
-			@RequestBody Aluno aluno) {
-		
+	public ResponseEntity<AlunoDTO> saveAluno(@RequestBody Aluno aluno) {
+
 		AlunoDTO ResponseDTO = alunoService.saveAlunoDTO(aluno);
-				
+
 		if (ResponseDTO != null) {
 			return new ResponseEntity<>(ResponseDTO, HttpStatus.CREATED);
 		}
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
-	@RequestMapping(value = "aluno",
-			method = RequestMethod.DELETE)
+
+	@RequestMapping(value = "/aluno", method = RequestMethod.DELETE)
 	@ApiOperation("Deleta um aluno")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<AlunoDTO> deleteAluno(
-			@RequestBody AlunoDTO RequestDTO) {
-			
+	public ResponseEntity<AlunoDTO> deleteAluno(@RequestBody AlunoDTO RequestDTO) {
+
 		AlunoDTO ResponseDTO = alunoService.deleteAlunoDTO(RequestDTO);
-				
+
 		if (ResponseDTO != null) {
 			return new ResponseEntity<>(ResponseDTO, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
-    @GetMapping(value = "alunos/pdf",
-            produces = MediaType.APPLICATION_PDF_VALUE)
+
+	@GetMapping(value = "/alunos/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<InputStreamResource> customersReport() throws IOException, DocumentException {
-        List<Aluno> alunos = alunoService.getAlunos();
-        
-        if (alunos != null)
-        {
-            ByteArrayInputStream bis = PDFGenerator.alunosPDFReport(alunos);
-     
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Disposition", "inline; filename=ibe-alunos.pdf");
-     
-            return new ResponseEntity<>(new InputStreamResource(bis), HttpStatus.OK);
-        }
-        
+	public ResponseEntity<InputStreamResource> customersReport() throws IOException, DocumentException {
+		List<Aluno> alunos = alunoService.getAlunos();
+
+		if (alunos != null) {
+			ByteArrayInputStream bis = PDFGenerator.alunosPDFReport(alunos);
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Disposition", "inline; filename=ibe-alunos.pdf");
+
+			return new ResponseEntity<>(new InputStreamResource(bis), HttpStatus.OK);
+		}
+
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-    }
-	
+	}
+
 }
