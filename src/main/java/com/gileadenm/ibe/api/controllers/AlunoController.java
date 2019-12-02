@@ -67,7 +67,7 @@ public class AlunoController {
 	@ApiOperation("Salva/Edita um aluno")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<AlunoDTO> saveAluno(@RequestBody Aluno aluno) {
-
+		
 		AlunoDTO ResponseDTO = alunoService.saveAlunoDTO(aluno);
 
 		if (ResponseDTO != null) {

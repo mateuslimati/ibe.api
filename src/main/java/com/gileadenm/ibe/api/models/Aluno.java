@@ -22,7 +22,7 @@ public class Aluno {
 
 	public Aluno(long matricula, @NotNull String nome, @NotNull String password, Date data_nasc, String estado_civil,
 			String sexo, String cor_etnia, String situacao_ocupacional, String nome_empresa, String funcao,
-			String endereco, String bairro, String cidade, String uf, String cep, String telefone_1, String telefone_2,
+			String endereco, int numero, String bairro, String cidade, String uf, String cep, String telefone_1, String telefone_2,
 			@NotNull String email, @NotNull String cpf, String rg, Date emissao, String nacionalidade,
 			String naturalidade, String mae, String pai, String necessidades_especiais, String escola_ensino_medio,
 			int ano_conclusao, String curso_superior, String denominacao, String localidade, String pastor,
@@ -39,6 +39,7 @@ public class Aluno {
 		this.nome_empresa = nome_empresa;
 		this.funcao = funcao;
 		this.endereco = endereco;
+		this.numero = numero;
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.uf = uf;
@@ -91,6 +92,8 @@ public class Aluno {
 	private String funcao;
 
 	private String endereco;
+	
+	private int numero;
 
 	private String bairro;
 
@@ -230,10 +233,19 @@ public class Aluno {
 		return endereco;
 	}
 
+	
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-
+	
+	public int getNumero() {
+		return numero;
+	}
+	
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+	
 	public String getBairro() {
 		return bairro;
 	}

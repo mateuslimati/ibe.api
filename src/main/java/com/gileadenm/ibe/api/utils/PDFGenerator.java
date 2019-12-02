@@ -57,7 +57,7 @@ public class PDFGenerator {
 				table.addCell(header);
 			});
                 
-        for (Aluno aluno : alunos) {
+        alunos.stream().forEach(aluno -> {
         	
         	PdfPCell matricula = new PdfPCell();
         	matricula.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -78,7 +78,7 @@ public class PDFGenerator {
         	cpf.setHorizontalAlignment(Element.ALIGN_CENTER);
         	cpf.setPhrase(new Phrase(aluno.getCpf(), new Font(Font.FontFamily.TIMES_ROMAN, 12)));
         	table.addCell(cpf);
-		}
+		});
         
         document.add(table);
         
