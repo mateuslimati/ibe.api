@@ -44,8 +44,7 @@ public class AlunoDTO {
 		this.cpf = cpf;
 	}
 
-	public AlunoDTO()
-	{
+	public AlunoDTO() {
 		
 	}
 	

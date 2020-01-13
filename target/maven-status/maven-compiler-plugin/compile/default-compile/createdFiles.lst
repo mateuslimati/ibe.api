@@ -1,10 +1,11 @@
+com/gileadenm/ibe/api/controllers/SectionController.class
 com/gileadenm/ibe/api/Application.class
 com/gileadenm/ibe/api/controllers/AlunoController.class
 com/gileadenm/ibe/api/repository/AlunoRepository.class
 com/gileadenm/ibe/api/utils/HeaderFooterPageEvent.class
 com/gileadenm/ibe/api/configs/SecurityConfig.class
 com/gileadenm/ibe/api/utils/PDFGenerator.class
-com/gileadenm/ibe/api/utils/HashMD5.class
+com/gileadenm/ibe/api/services/AuthenticationProviderImpl.class
 com/gileadenm/ibe/api/DTO/AlunoDTO.class
 com/gileadenm/ibe/api/services/AlunoService.class
 com/gileadenm/ibe/api/models/Aluno.class

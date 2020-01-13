@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gileadenm.ibe.api.DTO.AlunoDTO;
+import com.gileadenm.ibe.api.DTO.ModuloDTO;
 import com.gileadenm.ibe.api.models.Aluno;
 import com.gileadenm.ibe.api.services.AlunoService;
 import com.gileadenm.ibe.api.utils.PDFGenerator;
@@ -82,6 +83,32 @@ public class AlunoController {
 	public ResponseEntity<AlunoDTO> deleteAluno(@RequestBody AlunoDTO RequestDTO) {
 
 		AlunoDTO ResponseDTO = alunoService.deleteAlunoDTO(RequestDTO);
+
+		if (ResponseDTO != null) {
+			return new ResponseEntity<>(ResponseDTO, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	@RequestMapping(value = "/aluno/{matricula}/modulos", method = RequestMethod.POST)
+	@ApiOperation("Cadastra o aluno em n módulos")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<AlunoDTO> matriculaAluno(@PathVariable long matricula, @RequestBody List<Long> codigos) {
+
+		AlunoDTO ResponseDTO = alunoService.insertModulosInAluno(matricula, codigos);
+
+		if (ResponseDTO != null) {
+			return new ResponseEntity<>(ResponseDTO, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	@RequestMapping(value = "/aluno/{matricula}/modulos", method = RequestMethod.GET)
+	@ApiOperation("Retorna os módulos em que o aluno está cadastrado")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<List<ModuloDTO>> retornaModulos(@PathVariable long matricula) {
+
+		List<ModuloDTO> ResponseDTO = alunoService.getModulos(matricula);
 
 		if (ResponseDTO != null) {
 			return new ResponseEntity<>(ResponseDTO, HttpStatus.OK);

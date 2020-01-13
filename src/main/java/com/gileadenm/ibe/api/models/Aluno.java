@@ -1,16 +1,23 @@
 package com.gileadenm.ibe.api.models;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "TB_ALUNOS")
+@SequenceGenerator(name="ALUNOS_SEQ", sequenceName="alunos_seq", allocationSize = 1)
 public class Aluno {
 
 	public Aluno() {
@@ -66,7 +73,7 @@ public class Aluno {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="ALUNOS_SEQ")
 	private long matricula;
 
 	@NotNull
@@ -74,6 +81,15 @@ public class Aluno {
 
 	@NotNull
 	private String password;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable( 
+	        name = "aluno_modulos", 
+	        joinColumns = @JoinColumn(
+	          name = "aluno_matricula", referencedColumnName = "matricula"), 
+	        inverseJoinColumns = @JoinColumn(
+	          name = "modulo_codigo", referencedColumnName = "codigo")) 
+	private Set<Modulo> modulos;
 
 	private String role;
 
@@ -165,6 +181,14 @@ public class Aluno {
 		this.nome = nome;
 	}
 
+	public Set<Modulo> getModulos() {
+		return modulos;
+	}
+
+	public void setModulos(Set<Modulo> modulos) {
+		this.modulos = modulos;
+	}
+	
 	public String getPassword() {
 		return password;
 	}
