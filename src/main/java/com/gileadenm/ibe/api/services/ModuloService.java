@@ -1,6 +1,7 @@
 package com.gileadenm.ibe.api.services;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -85,15 +86,21 @@ public class ModuloService {
 
 		if (modulo == null)
 			return null;
+		
+		Set<Aluno> alunos = new HashSet<Aluno>();
 				
 		matriculas.stream().forEach(matricula -> {
 			Aluno aluno = alunoService.getAlunoByMatricula(matricula);
 			if (aluno != null)
-				modulo.getAlunos().add(aluno);
+				alunos.add(aluno);
 		});
 		
-		return saveModuloDTO(modulo);
-
+		try {
+			modulo.setAlunos(alunos);
+			return new ModuloDTO(moduloRepository.save(modulo));
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 	public List<AlunoDTO> getAlunos(long codigo) {

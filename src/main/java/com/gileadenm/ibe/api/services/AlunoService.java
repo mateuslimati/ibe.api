@@ -1,6 +1,7 @@
 package com.gileadenm.ibe.api.services;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -59,23 +60,6 @@ public class AlunoService {
 		return null;
 	}
 
-	public AlunoDTO insertModulosInAluno(long matricula, List<Long> codigos) {
-
-		Aluno aluno = getAlunoByMatricula(matricula);
-
-		if (aluno == null)
-			return null;
-				
-		codigos.stream().forEach(codigo -> {
-			Modulo modulo = moduloService.getModuloByCodigo(codigo);
-			if (modulo != null)
-				aluno.getModulos().add(modulo);
-		});
-		
-		return saveAlunoDTO(aluno);
-
-	}
-
 	public List<ModuloDTO> getModulos(long matricula) {
 
 		Aluno aluno = getAlunoByMatricula(matricula);
@@ -108,6 +92,9 @@ public class AlunoService {
 		Aluno alunoR = alunoRepository.findAlunoByEmail(aluno.getEmail());
 		if (alunoR != null) {
 			aluno.setMatricula(alunoR.getMatricula());
+			aluno.setRole(alunoR.getRole());
+			aluno.setPassword(alunoR.getPassword());
+			aluno.setModulos(alunoR.getModulos());
 		} else {
 			aluno.setRole("ROLE_USER");
 			aluno.setPassword(aluno.getCpf());
@@ -128,6 +115,31 @@ public class AlunoService {
 		}
 
 		return alunoDTO;
+	}
+	
+
+	public AlunoDTO insertModulosInAluno(long matricula, List<Long> codigos) {
+
+		Aluno aluno = getAlunoByMatricula(matricula);
+
+		if (aluno == null)
+			return null;
+		
+		Set<Modulo> modulos = new HashSet<Modulo>();
+
+				
+		codigos.stream().forEach(codigo -> {
+			Modulo modulo = moduloService.getModuloByCodigo(codigo);
+			if (modulo != null)
+				modulos.add(modulo);
+		});
+		
+		try {
+			aluno.setModulos(modulos);
+			return new AlunoDTO(alunoRepository.save(aluno));
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 }

@@ -84,7 +84,7 @@ public class Aluno {
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable( 
-	        name = "aluno_modulos", 
+	        name = "alunos_modulos", 
 	        joinColumns = @JoinColumn(
 	          name = "aluno_matricula", referencedColumnName = "matricula"), 
 	        inverseJoinColumns = @JoinColumn(
